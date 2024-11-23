@@ -1,5 +1,6 @@
 from django import forms
 from .models import comensal
+from .models import mesa
 
 class ComensalForm(forms.ModelForm):
     class Meta:
@@ -22,4 +23,17 @@ class ComensalForm(forms.ModelForm):
                 'class': 'form-control',
                 'placeholder': 'Ingrese su correo electrónico'
             }),
+        }
+
+class MesaForm(forms.ModelForm):
+    class Meta:
+        model = mesa
+        fields = ['capacidad', 'estado_mesa']
+        widgets = {
+            'capacidad': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'Capacidad'}),
+            'estado_mesa': forms.Select(choices=[
+                ('libre', 'Libre'),
+                ('ocupada', 'Ocupada'),
+                ('en_reserva', 'En Reserva')
+            ], attrs={'class': 'form-control'}),
         }
