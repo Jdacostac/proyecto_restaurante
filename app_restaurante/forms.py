@@ -1,6 +1,8 @@
 from django import forms
 from .models import comensal
 from .models import mesa
+from .models import reserva, comensal, mesa
+from django.forms.widgets import DateTimeInput
 
 class ComensalForm(forms.ModelForm):
     class Meta:
@@ -37,3 +39,34 @@ class MesaForm(forms.ModelForm):
                 ('en_reserva', 'En Reserva')
             ], attrs={'class': 'form-control'}),
         }
+
+class ReservaForm(forms.ModelForm):
+    class Meta:
+        model = reserva
+        fields = ['cedula_comensal', 'num_mesa', 'fecha_reserva', 'num_personas', 'estado']
+
+    cedula_comensal = forms.ModelChoiceField(
+        queryset=comensal.objects.all(),
+        to_field_name='nombre',
+        empty_label="Seleccione un Comensal",
+        label="Comensal"
+    )
+
+    num_mesa = forms.ModelChoiceField(
+        queryset=mesa.objects.filter(estado_mesa__in=['libre']),
+        to_field_name='num_mesa',
+        empty_label="Seleccione una Mesa",
+        label="Mesa"
+    )
+
+    fecha_reserva = forms.DateTimeField(
+        widget=DateTimeInput(attrs={'type': 'datetime-local'}),
+        label="Fecha y Hora de Reserva",
+        input_formats=['%Y-%m-%dT%H:%M']
+    )
+
+    estado = forms.ChoiceField(
+        choices=[('en reserva', 'En Reserva'), ('liberada', 'Liberada')],
+        widget=forms.Select,
+        label="Estado de la Reserva"
+    )

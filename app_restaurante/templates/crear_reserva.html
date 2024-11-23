@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear Reserva</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            text-align: center;
+            margin: 2rem auto;
+        }
+        .form-container {
+            max-width: 600px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>CREAR RESERVA</h1>
+    <div class="form-container">
+        <h2>Realiza tu reserva en Restaurante Tierra y Mar</h2>
+        <form method="post">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="cedula_comensal" class="form-label">Comensal</label>
+                {{ form.cedula_comensal }}
+            </div>
+
+            <div class="mb-3">
+                <label for="num_mesa" class="form-label">Mesa</label>
+                {{ form.num_mesa }}
+            </div>
+
+            <div class="mb-3">
+                <label for="fecha_reserva" class="form-label">Fecha de Reserva</label>
+                {{ form.fecha_reserva }}
+            </div>
+
+            <div class="mb-3">
+                <label for="num_personas" class="form-label">Número de Personas</label>
+                {{ form.num_personas }}
+            </div>
+
+            <div class="mb-3">
+                <label for="estado" class="form-label">Estado de la Reserva</label>
+                {{ form.estado }}
+            </div>
+
+            <button type="submit" class="btn btn-success">Registrar Reserva</button>
+        </form>
+
+        <br>
+        <a href="listar_reservas/" class="btn btn-secondary">Ver Reservas</a>
+    </div>
+</body>
+</html>
